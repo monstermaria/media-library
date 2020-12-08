@@ -9,11 +9,17 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import se.monstermaria.medialibrary.model.LibraryModel;
 import se.monstermaria.medialibrary.model.Media;
 
 public class MediaLibraryApp extends Application {
+
+    private LibraryModel model;
+
     @Override
     public void start(Stage stage) {
+        model = new LibraryModel();
+
         stage.setTitle("Media Library");
         stage.setScene(setupScene());
         stage.show();
@@ -37,6 +43,7 @@ public class MediaLibraryApp extends Application {
 
         // media table
         TableView<Media> mediaTable = new TableView<>();
+        setupTable(mediaTable);
 
         // put it all together
         VBox root = new VBox(10, hello, searchAndMenu, mediaTable);
@@ -45,5 +52,9 @@ public class MediaLibraryApp extends Application {
         scene.setFill(Color.PINK);
 
         return scene;
+    }
+
+    private void setupTable(TableView<Media> table) {
+
     }
 }

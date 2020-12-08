@@ -1,8 +1,10 @@
 package se.monstermaria.medialibrary.model;
 
-public class Media {
+public abstract class Media {
     protected MediaType type;
-    protected String title;
+    private int id;
+    private String title;
+    private int year;
     private Patron borrower = null;
 
     public enum MediaType {
@@ -10,8 +12,22 @@ public class Media {
         DVD
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     protected Media(String title) {
         this.title = title;
+    }
+
+    public Media(int id, String title, int year) {
+        this.id = id;
+        this.title = title;
+        this.year = year;
     }
 
     public String getTitel() {
@@ -25,4 +41,6 @@ public class Media {
     public void setBorrower(Patron patron) {
         borrower = patron;
     }
+
+    public abstract String getPersonList();
 }

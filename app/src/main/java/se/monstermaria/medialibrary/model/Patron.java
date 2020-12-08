@@ -2,18 +2,24 @@ package se.monstermaria.medialibrary.model;
 
 public class Patron {
     private final String id;
-    private final String password;
+    private final String name;
+    private final String phoneNumber;
 
-    public Patron(String id, String password) {
+    public Patron(String id, String name, String phoneNumber) {
         this.id = id;
-        this.password = password;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
     }
 
     public String getId() {
         return id;
     }
 
-    public String getPassword() {
-        return password;
+    public String getName() {
+        return name;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 }
