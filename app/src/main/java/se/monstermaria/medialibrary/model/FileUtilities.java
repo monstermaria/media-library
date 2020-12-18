@@ -1,5 +1,6 @@
 package se.monstermaria.medialibrary.model;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.File;
@@ -12,7 +13,7 @@ public class FileUtilities {
 		ArrayList<String> inputLines = new ArrayList<>();
 
 		try {
-			scan  = new Scanner(new File(fileName));
+			scan  = new Scanner(new File(fileName), StandardCharsets.UTF_8);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return inputLines;
