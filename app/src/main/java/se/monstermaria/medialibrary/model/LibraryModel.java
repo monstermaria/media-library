@@ -12,6 +12,7 @@ public class LibraryModel {
     public LibraryModel() {
         parseMedia();
         parsePatrons();
+        parseBorrowed();
     }
 
     private void parseMedia() {
@@ -109,9 +110,7 @@ public class LibraryModel {
     }
 
     public List<Media> getMedia() {
-        ArrayList<Media> copy = new ArrayList<>();
-        Collections.copy(copy, media);
-        return copy;
+        return media;
     }
 
     public boolean loginPatron(String patronId) {
