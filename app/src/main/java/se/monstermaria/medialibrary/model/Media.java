@@ -12,6 +12,9 @@ public abstract class Media {
         DVD
     }
 
+    public String getType() {
+        return type.name();
+    }
     public int getId() {
         return id;
     }
@@ -30,8 +33,12 @@ public abstract class Media {
         this.year = year;
     }
 
-    public String getTitel() {
+    public String getTitle() {
         return title;
+    }
+
+    public int getYear() {
+        return year;
     }
 
     public boolean isBorrowed() {
@@ -43,4 +50,8 @@ public abstract class Media {
     }
 
     public abstract String getPersonList();
+
+    public String getAvailability() {
+        return isBorrowed() ? "No" : "Yes";
+    }
 }
