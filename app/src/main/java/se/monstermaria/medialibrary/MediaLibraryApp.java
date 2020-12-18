@@ -3,6 +3,8 @@ package se.monstermaria.medialibrary;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -23,8 +25,6 @@ public class MediaLibraryApp extends Application {
 
     @Override
     public void start(Stage stage) {
-        model = new LibraryModel();
-
         stage.setTitle("Media Library");
         stage.setScene(setupScene());
         stage.show();
@@ -43,6 +43,12 @@ public class MediaLibraryApp extends Application {
         TextField searchInput = new TextField();
         Text loggedIn = new Text("You are not logged in");
         Button loginButton = new Button("Login");
+        loginButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                launchLoginStage();
+            }
+        });
 
         HBox searchAndMenu = new HBox(10, searchLabel, searchInput, loggedIn, loginButton);
 
@@ -60,7 +66,7 @@ public class MediaLibraryApp extends Application {
     }
 
     private void setupTable(TableView<Media> table) {
-        List<Media> mediaFromModel = model.getMedia();
+        List<Media> mediaFromModel = getModel().getMedia();
         ObservableList<Media> media = FXCollections.observableArrayList(mediaFromModel);
 
         TableColumn<Media, Integer> idColumn = new TableColumn<>("Media ID");
@@ -83,5 +89,37 @@ public class MediaLibraryApp extends Application {
 
         table.setItems(media);
         table.getColumns().setAll(idColumn, typeColumn, titleColumn, personsColumn, yearColumn, availableColumn);
+    }
+
+    private void launchLoginStage() {
+        Stage loginStage = getLoginStage();
+        Scene loginScene = getLoginScene();
+
+        loginStage.setScene(loginScene);
+        loginStage.show();
+    }
+
+    public Stage getLoginStage() {
+        Stage loginStage = new Stage();
+        loginStage.setTitle("Media Library Login");
+
+        return loginStage;
+    }
+
+    public Scene getLoginScene() {
+        // put it all together
+        VBox root = new VBox(10);
+
+        Scene scene = new Scene(root, 400, 100);
+
+        return scene;
+    }
+
+    public LibraryModel getModel() {
+        if (model == null) {
+            model = new LibraryModel();
+        }
+
+        return model;
     }
 }
