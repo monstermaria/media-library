@@ -2,9 +2,6 @@ package se.monstermaria.medialibrary;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -17,7 +14,7 @@ import javafx.stage.Stage;
 import se.monstermaria.medialibrary.model.LibraryModel;
 import se.monstermaria.medialibrary.model.Media;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class MediaLibraryApp extends Application {
 
@@ -43,12 +40,7 @@ public class MediaLibraryApp extends Application {
         TextField searchInput = new TextField();
         Text loggedIn = new Text("You are not logged in");
         Button loginButton = new Button("Login");
-        loginButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                launchLoginStage();
-            }
-        });
+        loginButton.setOnAction(e -> launchLoginStage());
 
         HBox searchAndMenu = new HBox(10, searchLabel, searchInput, loggedIn, loginButton);
 
@@ -66,29 +58,34 @@ public class MediaLibraryApp extends Application {
     }
 
     private void setupTable(TableView<Media> table) {
-        List<Media> mediaFromModel = getModel().getMedia();
-        ObservableList<Media> media = FXCollections.observableArrayList(mediaFromModel);
+        ArrayList<TableColumn<Media, ?>> columns = new ArrayList<>();
 
         TableColumn<Media, Integer> idColumn = new TableColumn<>("Media ID");
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        columns.add(idColumn);
 
         TableColumn<Media, String> typeColumn = new TableColumn<>("Type");
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+        columns.add(typeColumn);
 
         TableColumn<Media, String> titleColumn = new TableColumn<>("Title");
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        columns.add(titleColumn);
 
         TableColumn<Media, String> personsColumn = new TableColumn<>("Author/Actors");
         personsColumn.setCellValueFactory(new PropertyValueFactory<>("personList"));
+        columns.add(personsColumn);
 
         TableColumn<Media, Integer> yearColumn = new TableColumn<>("Year");
         yearColumn.setCellValueFactory(new PropertyValueFactory<>("year"));
+        columns.add(yearColumn);
 
         TableColumn<Media, String> availableColumn = new TableColumn<>("Available");
         availableColumn.setCellValueFactory(new PropertyValueFactory<>("availability"));
+        columns.add(availableColumn);
 
-        table.setItems(media);
-        table.getColumns().setAll(idColumn, typeColumn, titleColumn, personsColumn, yearColumn, availableColumn);
+        table.getColumns().addAll(columns);
+        table.setItems(FXCollections.observableArrayList(getModel().getMedia()));
     }
 
     private void launchLoginStage() {
@@ -110,9 +107,7 @@ public class MediaLibraryApp extends Application {
         // put it all together
         VBox root = new VBox(10);
 
-        Scene scene = new Scene(root, 400, 100);
-
-        return scene;
+        return new Scene(root, 400, 100);
     }
 
     public LibraryModel getModel() {
